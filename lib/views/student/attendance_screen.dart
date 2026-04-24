@@ -1,28 +1,6 @@
 import 'package:flutter/material.dart';
-
-// ─────────────────────────── DATA MODEL ───────────────────────────
-
-enum AttendanceStatus { chuaDiemDanh, daDiemDanh, vang }
-
-class AttendanceItem {
-  final String subjectName;
-  final String tiet;
-  final String lop;
-  final String phong;
-  AttendanceStatus status;
-
-  AttendanceItem({
-    required this.subjectName,
-    required this.tiet,
-    required this.lop,
-    required this.phong,
-    this.status = AttendanceStatus.chuaDiemDanh,
-  });
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//  ATTENDANCE LIST SCREEN
-// ═══════════════════════════════════════════════════════════════════
+import 'package:learning_management_app/enum/AttendanceStatus.dart';
+import 'package:learning_management_app/models/Attendance.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -32,16 +10,15 @@ class AttendanceScreen extends StatefulWidget {
 }
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
-  int _bottomIndex = 2;
-
-  final List<AttendanceItem> _items = [
-    AttendanceItem(
+  
+  final List<Attendance> _items = [
+    Attendance(
       subjectName: 'Thực hành quản trị hệ thống mạng',
       tiet: '1→6',
       lop: '14DHTH05',
       phong: 'A205 - Phòng máy tính - 140 Lê Trọng Tấn',
     ),
-    AttendanceItem(
+    Attendance(
       subjectName: 'Lập trình di động',
       tiet: '7→11',
       lop: '14DHTH10',
@@ -92,7 +69,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     );
   }
 
-  Widget _buildCard(AttendanceItem item) {
+  Widget _buildCard(Attendance item) {
     Color statusColor;
     String statusText;
     switch (item.status) {
@@ -227,8 +204,8 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     );
   }
 
-  // ── Open bottom sheet ─────────────────────────────────────────
-  void _openAttendanceSheet(AttendanceItem item) {
+
+  void _openAttendanceSheet(Attendance item) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -245,11 +222,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-//  ATTENDANCE METHOD BOTTOM SHEET  (Quét QR / Nhập mã)
-// ═══════════════════════════════════════════════════════════════════
+// Quét QR / Nhập mã
 
 class AttendanceMethodSheet extends StatefulWidget {
-  final AttendanceItem item;
+  final Attendance item;
   final VoidCallback onSuccess;
 
   const AttendanceMethodSheet({
@@ -307,7 +283,6 @@ class _AttendanceMethodSheetState extends State<AttendanceMethodSheet> {
           ),
           const SizedBox(height: 16),
 
-          // White content area
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -320,7 +295,7 @@ class _AttendanceMethodSheetState extends State<AttendanceMethodSheet> {
           ),
           const SizedBox(height: 16),
 
-          // Bottom tabs: Quét QR / Nhập mã
+          // Quét QR / Nhập mã
           Padding(
             padding: EdgeInsets.only(
               left: 16,
@@ -408,14 +383,14 @@ class _AttendanceMethodSheetState extends State<AttendanceMethodSheet> {
     );
   }
 
-  // ── QR View ──────────────────────────────────────────────────
+  // ── QR ──────────────────────────────────────────────────
   Widget _buildQRView() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // QR illustration
+        // QR 
         Container(
-          width: 220,
+          width: 420,
           height: 220,
           decoration: BoxDecoration(
             color: const Color(0xFFF0F4FF),
@@ -424,7 +399,7 @@ class _AttendanceMethodSheetState extends State<AttendanceMethodSheet> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              // QR corners decoration
+              // QR corner
               CustomPaint(
                 size: const Size(200, 200),
                 painter: _QRCornerPainter(),
@@ -458,7 +433,6 @@ class _AttendanceMethodSheetState extends State<AttendanceMethodSheet> {
         const SizedBox(height: 24),
         ElevatedButton.icon(
           onPressed: () {
-            // Simulate QR scan success
             _handleSuccess();
           },
           icon: const Icon(Icons.qr_code_scanner),
@@ -507,7 +481,7 @@ class _AttendanceMethodSheetState extends State<AttendanceMethodSheet> {
   }
 }
 
-// ── Code Entry Form (stateful for controller) ─────────────────────
+// ── Code Entry Form─────────────────────
 
 class _CodeEntryForm extends StatefulWidget {
   final void Function(String code) onSubmit;
@@ -602,8 +576,7 @@ class _CodeEntryFormState extends State<_CodeEntryForm> {
   }
 }
 
-// ─────────────────────────── CUSTOM PAINTERS ───────────────────────────
-
+// ──────────────────── góc QR ───────────────────────────
 class _QRCornerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

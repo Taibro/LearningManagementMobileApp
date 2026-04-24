@@ -538,8 +538,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  // ── Month View ────────────────────────────────────────────────────
-
+  
   Widget _monthView() {
     final y = _selected.year;
     final m = _selected.month;
@@ -573,7 +572,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             child: _calendarGrid(y, m),
           ),
         ),
-        // ── Grouped event list ────────────────────────────────────
+        
         if (groups.isEmpty)
           SliverToBoxAdapter(
             child: Padding(
@@ -610,11 +609,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  /// Calendar grid widget (used in month view)
+  /// Calendar grid widget
   Widget _calendarGrid(int year, int month) {
     final firstDay    = DateTime(year, month, 1);
     final daysInMonth = DateTime(year, month + 1, 0).day;
-    final startOffset = firstDay.weekday - 1; // Mon=0
+    final startOffset = firstDay.weekday - 1; 
 
     const wdLabels = ['Th 2','Th 3','Th 4','Th 5','Th 6','Th 7','CN'];
 
@@ -705,7 +704,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     );
   }
 
-  // ── Day group header pill ─────────────────────────────────────────
 
   Widget _groupHeader(DateTime date) {
     return Container(
@@ -1358,10 +1356,7 @@ class _MonthYearPickerSheetState
   }
 }
 
-// ════════════════════════════════════════════════════════════════════
-//  EMPTY FOLDER ILLUSTRATION
-// ════════════════════════════════════════════════════════════════════
-
+//-------------------------------------------------------------------
 class _FolderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {

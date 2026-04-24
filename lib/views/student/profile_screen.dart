@@ -9,8 +9,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool _notificationEnabled = true;
-  int _bottomIndex = 3;
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
