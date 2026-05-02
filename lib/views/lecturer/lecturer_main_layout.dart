@@ -1,54 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:learning_management_app/views/student/attendance_screen.dart';
-import 'package:learning_management_app/views/student/home_screen.dart';
-import 'package:learning_management_app/views/student/profile_screen.dart';
-import 'package:learning_management_app/views/student/schedule_screen.dart';
-import 'package:learning_management_app/views/lecturer/lecturer_main_layout.dart';
+import 'lecturer_home_screen.dart';
+import 'lecturer_schedule_screen.dart';
+import 'lecturer_attendance_screen.dart';
+import 'lecturer_profile_screen.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+/// Để dùng: thay `home: const MainLayout()` trong main.dart thành
+/// `home: const LecturerMainLayout()` và import file này.
+class LecturerMainLayout extends StatefulWidget {
+  const LecturerMainLayout({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Student App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1565C0)),
-        useMaterial3: true,
-      ),
-      home: const LecturerMainLayout(),
-    );
-  }
+  State<LecturerMainLayout> createState() => _LecturerMainLayoutState();
 }
 
-class MainLayout extends StatefulWidget {
-  const MainLayout({super.key});
+class _LecturerMainLayoutState extends State<LecturerMainLayout> {
+  int _selectedIndex = 0;
 
-  @override
-  State<MainLayout> createState() => _MainLayoutState();
-}
-
-class _MainLayoutState extends State<MainLayout> {
-int _selectedIndex = 0;
-
-  // Danh sách các màn hình sẽ được tráo đổi
   final List<Widget> _screens = [
-    const HomeScreen(),
-    const ScheduleScreen(),
-    const AttendanceScreen(), // Tạo tạm một màn hình rỗng nếu chưa có
-    const ProfileScreen(),    // Tạo tạm một màn hình rỗng nếu chưa có
+    const LecturerHomeScreen(),
+    const LecturerScheduleScreen(),
+    const LecturerAttendanceScreen(),
+    const LecturerProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex], 
-      
+      body: _screens[_selectedIndex],
       bottomNavigationBar: _buildBottomNavBar(),
     );
   }
@@ -56,11 +34,11 @@ int _selectedIndex = 0;
   Widget _buildBottomNavBar() {
     final items = [
       {'icon': Icons.home_rounded, 'label': 'Trang chủ'},
-      {'icon': Icons.calendar_today_outlined, 'label': 'Lịch học'},
+      {'icon': Icons.calendar_today_outlined, 'label': 'Lịch dạy'},
       {'icon': Icons.checklist_outlined, 'label': 'Điểm danh'},
       {'icon': Icons.person_outline_rounded, 'label': 'Cá nhân'},
     ];
- 
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -87,7 +65,9 @@ int _selectedIndex = 0;
                   children: [
                     Icon(
                       items[index]['icon'] as IconData,
-                      color: isSelected ? const Color(0xFF1565C0) : const Color(0xFF9E9E9E),
+                      color: isSelected
+                          ? const Color(0xFF6B4FA0)
+                          : const Color(0xFF9E9E9E),
                       size: 24,
                     ),
                     const SizedBox(height: 3),
@@ -95,8 +75,11 @@ int _selectedIndex = 0;
                       items[index]['label'] as String,
                       style: TextStyle(
                         fontSize: 11,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
-                        color: isSelected ? const Color(0xFF1565C0) : const Color(0xFF9E9E9E),
+                        fontWeight:
+                            isSelected ? FontWeight.w600 : FontWeight.normal,
+                        color: isSelected
+                            ? const Color(0xFF6B4FA0)
+                            : const Color(0xFF9E9E9E),
                       ),
                     ),
                   ],
@@ -108,5 +91,4 @@ int _selectedIndex = 0;
       ),
     );
   }
-
 }
