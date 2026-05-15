@@ -4,6 +4,7 @@ import 'package:learning_management_app/views/student/home_screen.dart';
 import 'package:learning_management_app/views/student/profile_screen.dart';
 import 'package:learning_management_app/views/student/schedule_screen.dart';
 import 'package:learning_management_app/views/lecturer/lecturer_main_layout.dart';
+import 'package:learning_management_app/views/admin/admin_main_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1565C0)),
         useMaterial3: true,
       ),
-      home: const LecturerMainLayout(),
+      home: const AdminMainLayout(),
     );
   }
 }
